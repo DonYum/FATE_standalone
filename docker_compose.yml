@@ -1,7 +1,7 @@
 version: "3"
 services:
   python:
-     image: "docker_python"
+     image: "federatedai/python:1.4.4-release"
      ports:
             - "9380:9380"
             - "9360:9360"
@@ -14,7 +14,7 @@ services:
             - "/etc/localtime:/etc/localtime"
      container_name: fate_python
   fateboard:
-     image: "docker_fateboard"
+     image: "federatedai/fateboard:1.4.4-release"
      links:
             - python
      ports:
