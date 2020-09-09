@@ -7,14 +7,14 @@ services:
             - "9360:9360"
      volumes:
             - "./fate/log:/fate/logs"
-            - "./fate/fate_flow:/fate/fate_flow"
-            - "./fate/federatedml:/fate/federatedml"
-            - "./fate/examples:/fate/examples"
             - "./fate/model:/fate/model_local_cache"
+            - "./examples:/fate/examples"
+            - "./fate_flow:/fate/fate_flow"
+            - "./federatedml:/fate/federatedml"
             - "/etc/localtime:/etc/localtime"
      container_name: fate_python
   fateboard:
-     image: "federatedai/fateboard:1.4.4-release"
+     image: "docker_fateboard"
      links:
             - python
      ports:
@@ -23,6 +23,6 @@ services:
             - python
      volumes:
             - "./fate/log:/data/projects/fate/python/logs"
-            - "./fate/fate_flow:/fate/fate_flow"
+            - "./fate_flow:/fate/fate_flow"
             - "/etc/localtime:/etc/localtime"
      container_name: fate_fateboard
