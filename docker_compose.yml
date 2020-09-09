@@ -1,0 +1,23 @@
+version: "3"
+services:
+  python:
+     image: "docker_python"
+     ports:
+            - "9380:9380"
+            - "9360:9360"
+     volumes:
+            - "./fate/log:/fate/logs"
+            - "/etc/localtime:/etc/localtime"
+     container_name: fate_python
+  fateboard:
+     image: "docker_fateboard"
+     links:
+            - python
+     ports:
+            - "8080:8080"
+     depends_on:
+            - python
+     volumes:
+            - "./fate/log:/data/projects/fate/python/logs"
+            - "/etc/localtime:/etc/localtime"
+     container_name: fate_fateboard
