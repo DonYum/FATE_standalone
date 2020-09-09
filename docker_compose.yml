@@ -1,7 +1,7 @@
 version: "3"
 services:
   python:
-     image: "federatedai/python:1.4.4-release"
+     image: "docker_python"
      ports:
             - "9380:9380"
             - "9360:9360"
