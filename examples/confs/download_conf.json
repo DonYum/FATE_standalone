@@ -1,0 +1,35 @@
+{
+    "initiator": {
+        "role": "local",
+        "party_id": 0
+    },
+    "job_parameters": {
+        "work_mode": 0
+    },
+    "role": {
+        "local": [
+            0
+        ]
+    },
+    "role_parameters": {
+        "local": {
+            "download_test_0": {
+                "work_mode": [
+                    0
+                ],
+                "delimitor": [
+                    ","
+                ],
+                "output_path": [
+                    "/fate/breast.csv"
+                ],
+                "namespace": [
+                    "experiment"
+                ],
+                "table_name": [
+                    "breast_hetero_guest"
+                ]
+            }
+        }
+    }
+}

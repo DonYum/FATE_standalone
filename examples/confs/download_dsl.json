@@ -1,0 +1,7 @@
+{
+    "components": {
+        "download_test_0": {
+            "module": "DownloadTest"
+        }
+    }
+}
