@@ -45,6 +45,8 @@ python fate_flow_client.py -f component_output_model -j $job_id -r $role -p $par
 - split:
 
     python fate_flow/fate_flow_client.py -f submit_job -d examples/demo/split_3_dsl.json -c examples/demo/split_3_conf.json
+    python fate_flow/fate_flow_client.py -f submit_job -d examples/demo/split_2_2_dsl.json -c examples/demo/split_2_2_conf.json
+    python fate_flow/fate_flow_client.py -f submit_job -d examples/demo/split_4_dsl.json -c examples/demo/split_4_conf.json
 
 #### 查看job状态
 python fate_flow/fate_flow_client.py -f query_job -r guest -p 10000 -j 202008311115403110241
