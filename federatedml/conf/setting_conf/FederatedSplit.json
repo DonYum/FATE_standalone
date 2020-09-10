@@ -1,0 +1,13 @@
+{
+    "module_path":  "federatedml/feature",
+    "default_runtime_conf": "split_param.json",
+    "param_class" : "federatedml/param/split_param.py/SplitParam",
+    "need_deploy": false,
+    "role":
+    {
+        "guest|host":
+        {
+            "program": "split.py/Spliter"
+        }
+    }
+}

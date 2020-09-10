@@ -542,13 +542,11 @@ class DSLParser(object):
                                     pre_name = input_data.split(".")[0]
                                     data_suffix = input_data.split(".")[1]
                                     pre_idx = mapping_list.get(pre_name)
-                                    if self.get_need_deploy_parameter(name=pre_name,
-                                                                      setting_conf_prefix=setting_conf_prefix):
-                                        self.predict_dsl["components"][name]["input"]["data"]["data"].append(input_data)
-                                    else:
-                                        self.predict_dsl["components"][name]["input"]["data"]["data"] = \
-                                            output_data_maps[
-                                                pre_name][data_suffix]
+                                    self.predict_dsl["components"][name]["input"]["data"]["data"].append(input_data)
+                                    # if self.get_need_deploy_parameter(name=pre_name, setting_conf_prefix=setting_conf_prefix):
+                                    #     self.predict_dsl["components"][name]["input"]["data"]["data"].append(input_data)
+                                    # else:
+                                    #     self.predict_dsl["components"][name]["input"]["data"]["data"] = output_data_maps[pre_name][data_suffix]
 
                         elif "train_data" in self.dsl["components"][name]["input"]["data"]:
                             input_data = self.dsl["components"][name]["input"]["data"].get("train_data")[0]
