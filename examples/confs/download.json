@@ -1,0 +1,6 @@
+{
+  "output_path": "./breast_t.csv",
+  "work_mode": 0,
+  "table_name": "breast_hetero_guest",
+  "namespace": "experiment"
+}

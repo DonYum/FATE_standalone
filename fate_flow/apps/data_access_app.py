@@ -58,6 +58,8 @@ def download_upload(access_module):
         required_arguments.extend(['file', 'head', 'partition'])
     elif access_module == 'download':
         required_arguments.extend(['output_path'])
+    elif access_module == 'download_test':
+        required_arguments.extend(['output_path'])
     else:
         raise Exception('can not support this operating: {}'.format(access_module))
     detect_utils.check_config(request_config, required_arguments=required_arguments)
@@ -176,6 +178,21 @@ def gen_data_access_job_config(config_data, access_module):
 
         job_dsl["components"]["download_0"] = {
             "module": "Download"
+        }
+
+    if access_module == 'download_test':
+        job_runtime_conf["role_parameters"][initiator_role] = {
+            "download_test_0": {
+                "work_mode": [config_data["work_mode"]],
+                "delimitor": [config_data.get("delimitor", ",")],
+                "output_path": [config_data["output_path"]],
+                "namespace": [config_data["namespace"]],
+                "table_name": [config_data["table_name"]]
+            }
+        }
+
+        job_dsl["components"]["download_test_0"] = {
+            "module": "DownloadTest"
         }
 
     return job_dsl, job_runtime_conf

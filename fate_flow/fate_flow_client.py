@@ -37,7 +37,7 @@ JOB_FUNC = ["job_config", "job_log"]
 TASK_OPERATE_FUNC = ["query_task"]
 TRACKING_FUNC = ["component_parameters", "component_metric_all", "component_metric_delete", "component_metrics",
                  "component_output_model", "component_output_data", "component_output_data_table"]
-DATA_FUNC = ["download", "upload", "upload_history"]
+DATA_FUNC = ["download", "download_test", "upload", "upload_history"]
 TABLE_FUNC = ["table_info", "table_delete"]
 MODEL_FUNC = ["load", "bind", "store", "restore", "export", "import"]
 PERMISSION_FUNC = ["grant_privilege", "delete_privilege", "query_privilege"]
@@ -181,8 +181,12 @@ def call_fun(func, config_data, dsl_path, config_path):
             else:
                 raise Exception('The file is obtained from the fate flow client machine, but it does not exist, '
                                 'please check the path: {}'.format(file_name))
-        else:
+        elif func == 'download':
             response = requests.post("/".join([server_url, "data", func.replace('_', '/')]), json=config_data)
+        else:
+            # print(f'config_data: {config_data}')
+            response = requests.post("/".join([server_url, "data", func]), json=config_data)
+            # print(f'retcode: {response.content}')
         try:
             if response.json()['retcode'] == 999:
                 start_cluster_standalone_job_server()
