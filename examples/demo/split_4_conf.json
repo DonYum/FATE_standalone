@@ -76,7 +76,7 @@
     },
     "algorithm_parameters": {
         "federated_split_0": {
-            "mode": "stratified",
+            "random_seed": 1,
             "fractions": [0.4, 0.3, 0.2, 0.1]
         }
     }

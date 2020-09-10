@@ -1,4 +1,4 @@
 {
-    "mode": "random",
+    "random_seed": 1,
     "fractions": [0.8, 0.2]
 }

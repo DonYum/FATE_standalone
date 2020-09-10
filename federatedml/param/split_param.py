@@ -16,6 +16,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+from federatedml.feature import instance
 from federatedml.param.base_param import BaseParam
 import collections
 
@@ -26,36 +27,32 @@ class SplitParam(BaseParam):
 
     Parameters
     ----------
-    mode: str, accepted 'random','stratified'' only in this version, specify split to use, default: 'random'
-
     fractions: list, e.g. [0.5, 0.3, 0.2].
 
-    random_state: int, RandomState instance or None, default: None
+    random_seed: int
 
     need_run: bool, default True
         Indicate if this module needed to be run
     """
 
-    def __init__(self, mode="random", fractions=None, random_state=None, task_type="hetero", need_run=True):
-        self.mode = mode
+    def __init__(self, fractions=None, random_seed=1, task_type="hetero", need_run=True):
         self.fractions = fractions
-        self.random_state = random_state
+        self.random_seed = random_seed
         self.task_type = task_type
         self.need_run = need_run
 
     def check(self):
         descr = "split param"
-        self.mode = self.check_and_change_lower(self.mode,
-                                                ["random", "stratified"],
-                                                descr)
 
-        if self.mode == "stratified" and self.fractions is not None:
-            if not isinstance(self.fractions, list):
-                raise ValueError("fractions of split param when using stratified should be list")
-            for ele in self.fractions:
-                if not isinstance(ele, float):
-                    raise ValueError("element in fractions of split param should be a float list")
-            if abs(1-sum(self.fractions)) > 0.000001:
-                raise ValueError(f"fractions sum of split param should be 1.0. {self.fractions}, {sum(self.fractions)}")
+        if not instance(self.random_seed, int):
+            raise ValueError("random_seed of split param should be int")
+
+        if not isinstance(self.fractions, list):
+            raise ValueError("fractions of split param when using stratified should be list")
+        for ele in self.fractions:
+            if not isinstance(ele, float):
+                raise ValueError("element in fractions of split param should be a float list")
+        if abs(1-sum(self.fractions)) > 0.000001:
+            raise ValueError(f"fractions sum of split param should be 1.0. {self.fractions}, {sum(self.fractions)}")
 
         return True
