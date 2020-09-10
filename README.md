@@ -27,22 +27,22 @@ docker-compose -f docker_compose.yml up
 
 这是可以在`http://{fateboard-serverip}:8080/`看到fateboard页面。
 
+#### 开发方式
+
 FATE_standalone下面的`fate_flow`、`federatedml`、`examples`是挂载在docker容器中的，可以直接在外面修改。
 
 注意：修改`federatedml`组件、`examples`下面的代码不用重启服务——`federatedml`组件是通过插件方式接入的，其他部分修改，比如修改`fate_flow`下面的代码，就需要重启服务了。
 
 ## 组件开发
 
-新组件的
-
 ### fake component
 
-##### commits
+#### commits
 
 - `ee8873499028a32b80f847f8b981bfbf3fe8aba1`: Add Fake component - using Download.
 - `85400cfd4f558526a9007e01513da911e94a8dd0`: 将新的component封装进fate_flow RESTful接口和fate_flow_cli。
 
-##### 测试
+#### 测试
 
 ```sh
 # 上传数据
@@ -55,21 +55,21 @@ python fate_flow/fate_flow_client.py -f download_test -c examples/demo/download.
 
 ### split
 
-##### commits
+#### commits
 
 - `d5ec883994e3d9e081332bf7ba8ca51acb1bd3b1`: 实现split组件。
 - `1c112cf492b521069ca9a9b371e0039ac476c178`: 添加两个split Demo。
 - `9dbac830e5f0d6864fcad1bcb57bcfcc904d9f39`: split: 简化代码。
 - `c8eb184310fa5659ccab6fe48feb86f60338136d`: split：添加random_seed参数
 
-##### 组件参数
+#### 组件参数
 
 ```txt
 "random_seed": 1          # int. 随机数种子，不同role之间需要使用相同种子，这样才能产生相同切分数据集。
 "fractions": [0.8, 0.2]   # float list. 切分得到的数据集比例。需满足条件：长度不为零，sum(fractions) == 1.
 ```
 
-##### 测试
+#### 测试
 
 ```sh
 # 上传数据
@@ -81,7 +81,7 @@ python fate_flow/fate_flow_client.py -f submit_job -d examples/demo/split_2_2_ds
 python fate_flow/fate_flow_client.py -f submit_job -d examples/demo/split_4_dsl.json -c examples/demo/split_4_conf.json
 ```
 
-##### TODO
+#### TODO
 
 这个版本是为了把流程串起来，还有缺陷，比如使用sample方法切分会导致数据集之间有重合。
 
