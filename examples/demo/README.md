@@ -21,13 +21,19 @@ python fate_flow/fate_flow_client.py -f upload -c examples/federatedml-1.x-examp
 python fate_flow/fate_flow_client.py -f upload -c examples/demo/upload_data_guest.json
 python fate_flow/fate_flow_client.py -f upload -c examples/demo/upload_data_host.json
 
+#### 下载数据
+
+- python fate_flow_client.py -f download -n table_namespace -t table_name -w work_mode -o save_file
+
+##### 测试fake component
+
+- python fate_flow/fate_flow_client.py -f download_test -c examples/demo/download.json
+- python fate_flow/fate_flow_client.py -f submit_job -d examples/demo/download_dsl.json -c examples/demo/download_conf.json
+
 #### 查看数据????
 
-#### 下载数据
-python fate_flow/fate_flow_client.py -f download_test -c examples/demo/download.json
-python fate_flow_client.py -f download -n table_namespace -t table_name -w work_mode -o save_file
-
 #### 导出model output data
+
 python fate_flow_client.py -f component_output_model -j $job_id -r $role -p $party_id -cpn $component_name -o $output_path
 
 ### 任务
@@ -35,7 +41,6 @@ python fate_flow_client.py -f component_output_model -j $job_id -r $role -p $par
 #### 提交DSL
 
 - python fate_flow/fate_flow_client.py -f submit_job -d examples/demo/job_dsl.json -c examples/demo/job_runtime_conf.json
-- python fate_flow/fate_flow_client.py -f submit_job -d examples/demo/download_dsl.json -c examples/demo/download_conf.json
 - python fate_flow/fate_flow_client.py -f submit_job -d examples/demo/sample_test_dsl.json -c examples/demo/sample_test_conf.json
 
 - pipeline：
