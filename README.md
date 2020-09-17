@@ -22,7 +22,7 @@ docker images
 ```sh
 git clone https://github.com/DonYum/FATE_standalone.git
 cd FATE_standalone
-docker-compose -f docker_compose.yml up
+docker-compose up
 ```
 
 这是可以在`http://{fateboard-serverip}:8080/`看到fateboard页面。

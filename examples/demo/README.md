@@ -57,6 +57,10 @@ python fate_flow_client.py -f component_output_model -j $job_id -r $role -p $par
 python fate_flow/fate_flow_client.py -f query_job -r guest -p 10000 -j 202008311115403110241
 
 
+#### 获取配置
+
+python fate_flow/fate_flow_client.py -f job_config -j   202002280915402308774 -r guest -p 10000 -o examples/federatedml-1.x-examples/homo_logistic_regression
+
 #### 查看logs
 python fate_flow_client.py -f job_log -j $jobid -o $output_dir
 
