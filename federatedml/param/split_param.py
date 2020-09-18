@@ -56,7 +56,10 @@ class SplitParam(BaseParam):
         for ele in self.fractions:
             if not isinstance(ele, float):
                 raise ValueError("element in fractions of split param should be a float list")
-        if abs(1-sum(self.fractions)) > 0.000001:
-            raise ValueError(f"fractions sum of split param should be 1.0. {self.fractions}, {sum(self.fractions)}")
+
+        _f_sum = sum(self.fractions)
+        # if abs(1-sum(self.fractions)) > 0.000001:
+        if not self._equal(_f_sum, 1):
+            raise ValueError(f"fractions sum of split param should be 1.0. {self.fractions}, {_f_sum}")
 
         return True

@@ -77,51 +77,54 @@ class Spliter(ModelBase):
         if task_type not in [consts.HOMO, consts.HETERO]:
             raise ValueError("{} task type not support yet".format(task_type))
 
-        # res = self.sample(data_inst)[0]
         res = data_inst
+        LOGGER.info(f"fractions={self.fractions}, random_seed={self.random_seed}, res={res}, count={res.count()}")
+        LOGGER.info(f"res.meta={res.get_metas()}, res.name={res.get_name()}, res.namespace={res.get_namespace()}, res.partitions={res.get_partitions()}")
 
-        # data_set = list(data_inst.collect())
-        # res = session.parallelize(data_set, include_key=True, partition=data_inst._partitions)
-        # res.schema = data_inst.schema
-
-        LOGGER.info(f"random_seed={self.random_seed}")
-        LOGGER.info(f"res={res}, count={res.count()}")
-        LOGGER.info(f"res.meta={res.get_metas()}")
-        LOGGER.info(f"res.name={res.get_name()}")
-        LOGGER.info(f"res.namespace={res.get_namespace()}")
-        LOGGER.info(f"res.partitions={res.get_partitions()}")
-
+        method_choice = 2
         data_res = []
-        # data_res = [res for i in self.fractions]
-        # data_res = [res.sample(1, self.random_seed) for i in self.fractions]
-        # data_res = [res.take(100) for i in self.fractions]
-        for i in self.fractions:
-            _res = res.sample(i, self.random_seed)
-            _res.schema = data_inst.schema
-            data_res.append(_res)
+        if method_choice == 0:
+            # 0. simple sample method: 会有ID重复抽样问题
+            for i in self.fractions:
+                _res = res.sample(i, self.random_seed)
+                _res.schema = data_inst.schema
+                data_res.append(_res)
+        elif method_choice == 1:
+            # 1. sample method: 会有数量对不上的情况出现
+            _sum = 1.0
+            for _frac in self.fractions[:-1]:
+                frac = _frac / _sum
+                _sum -= _frac
+
+                sample_res = res.sample(frac, self.random_seed)
+                sample_res.schema = data_inst.schema
+                data_res.append(sample_res)
+                res = res.subtractByKey(sample_res)
+                LOGGER.info(f"{_frac}-{frac}: sample_res={sample_res.count()}, res={res.count()}")
+            
+            res.schema = data_inst.schema
+            data_res.append(res)
+            LOGGER.info(f"End-{self.fractions[-1]}: res.count={res.count()}")
+        elif method_choice == 2:
+            # 2. take method
+            _total = res.count()
+            for _frac in self.fractions[:-1]:
+                frac_num = int(_frac * _total)
+
+                sample_res = res.take(frac_num)
+                sample_res = session.parallelize(sample_res, include_key=True, partition=data_inst._partitions)
+                sample_res.schema = data_inst.schema
+                data_res.append(sample_res)
+                res = res.subtractByKey(sample_res)
+                LOGGER.info(f"{_frac}-{frac_num}: sample_res={sample_res.count()}, res={res.count()}")
+            
+            res.schema = data_inst.schema
+            data_res.append(res)
+            LOGGER.info(f"End-{self.fractions[-1]}: res.count={res.count()}")
+        else:
+            raise(f'Invalid method_choice={method_choice}')
 
         # For debugging
-        LOGGER.info(f"type={data_res}, {res}")
-
-        try:
-            LOGGER.info(f"res.count={[i.count() for i in data_res]}")
-        except:
-            pass
-
-        try:
-            LOGGER.info(f"res.first()={res.first()}")
-        except:
-            pass
-        try:
-            LOGGER.info(f"res.first()[1].features={res.first()[1].features}")
-        except:
-            pass
-
-        try:
-            for i in range(len(data_res)):
-                LOGGER.info(f"data_res[{i}].first()={data_res[i].first()}")
-        except:
-            pass
         try:
             for i in range(len(data_res)):
                 LOGGER.info(f"data_res[{i}].first()[1].features={data_res[i].first()[1].features}")
