@@ -19,6 +19,9 @@
 from federatedml.feature import instance
 from federatedml.param.base_param import BaseParam
 import collections
+# from arch.api.utils import log_utils
+
+# LOGGER = log_utils.getLogger()
 
 
 class SplitParam(BaseParam):
@@ -35,17 +38,18 @@ class SplitParam(BaseParam):
         Indicate if this module needed to be run
     """
 
-    def __init__(self, fractions=None, task_type="hetero", need_run=True):
+    def __init__(self, fractions=None, random_seed=None, task_type="hetero", need_run=True):
         self.fractions = fractions
-        # self.random_seed = random_seed
+        self.random_seed = random_seed
         self.task_type = task_type
         self.need_run = need_run
 
     def check(self):
         descr = "split param"
 
-        # if not instance(self.random_seed, int):
-        #     raise ValueError("random_seed of split param should be int")
+        # LOGGER.info(f'{type(self.random_seed)}, {type(self.fractions)}, {self.random_seed}')
+
+        self.check_positive_integer(self.random_seed, "random_seed of split param")
 
         if not isinstance(self.fractions, list):
             raise ValueError("fractions of split param when using stratified should be list")

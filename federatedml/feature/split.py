@@ -49,8 +49,7 @@ class Spliter(ModelBase):
     def _init_model(self, split_param):
         self.task_type = split_param.task_type
         self.fractions = split_param.fractions
-        # self.random_seed = split_param.random_seed or 1
-        self.random_seed = 1
+        self.random_seed = split_param.random_seed or 1
 
     def _init_role(self, component_parameters):
         self.task_role = component_parameters["local"]["role"]

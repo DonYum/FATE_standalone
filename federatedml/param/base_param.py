@@ -152,6 +152,10 @@ class BaseParam(object):
         return in_range
 
     @staticmethod
+    def _equal(value, compare_val):
+        return abs(value - compare_val) <= consts.FLOAT_ZERO
+
+    @staticmethod
     def _in(value, right_value_list):
         return value in right_value_list
 
