@@ -1,0 +1,8 @@
+{
+    "file": "examples/demo/stress_test/stress_test_1000w_data.csv",
+    "head": 1,
+    "partition": 16,
+    "work_mode": 0,
+    "table_name": "stree_test_1000w",
+    "namespace": "experiment"
+}

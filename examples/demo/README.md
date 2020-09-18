@@ -65,6 +65,12 @@ python fate_flow/fate_flow_client.py -f job_config -j   202002280915402308774 -r
 python fate_flow_client.py -f job_log -j $jobid -o $output_dir
 
 
+### 测试Join
+
+python fate_flow/fate_flow_client.py -f upload -c examples/demo/upload_data.json
+
+python fate_flow/fate_flow_client.py -f submit_job -d examples/federatedml-1.x-examples/intersect/test_intersect_without_dataio_job_dsl.json -c examples/federatedml-1.x-examples/intersect/test_intersect_without_dataio_job_conf.json
+
 #### predict
 
 #### evaluation
