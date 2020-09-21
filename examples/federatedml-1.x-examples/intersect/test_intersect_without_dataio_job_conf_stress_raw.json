@@ -1,0 +1,53 @@
+{
+    "initiator": {
+        "role": "guest",
+        "party_id": 9990
+    },
+    "job_parameters": {
+        "work_mode": 0
+    },
+    "role": {
+        "guest": [
+            9990
+        ],
+        "host": [
+            9991
+        ]
+    },
+    "role_parameters": {
+        "guest": {
+            "args": {
+                "data": {
+                    "data": [
+                        {
+                            "name": "stree_test_100w",
+                            "namespace": "experiment"
+                        }
+                    ]
+                }
+            }
+        },
+        "host": {
+            "args": {
+                "data": {
+                    "data": [
+                        {
+                            "name": "stree_test_100w",
+                            "namespace": "experiment"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "algorithm_parameters": {
+        "intersect_0": {
+            "intersect_method": "raw",
+            "sync_intersect_ids": true,
+            "only_output_key": true,
+            "intersect_cache_param": {
+                "use_cache": false
+            }
+        }
+    }
+}

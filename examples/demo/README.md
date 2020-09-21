@@ -21,6 +21,9 @@ python fate_flow/fate_flow_client.py -f upload -c examples/federatedml-1.x-examp
 python fate_flow/fate_flow_client.py -f upload -c examples/demo/upload_data_guest.json
 python fate_flow/fate_flow_client.py -f upload -c examples/demo/upload_data_host.json
 
+python fate_flow/fate_flow_client.py -f upload -c examples/demo/upload_data_homo_guest.json
+python fate_flow/fate_flow_client.py -f upload -c examples/demo/upload_data_homo_host.json
+
 #### 下载数据
 
 - python fate_flow_client.py -f download -n table_namespace -t table_name -w work_mode -o save_file
