@@ -74,6 +74,8 @@ python fate_flow/fate_flow_client.py -f upload -c examples/demo/upload_data.json
 
 python fate_flow/fate_flow_client.py -f submit_job -d examples/federatedml-1.x-examples/intersect/test_intersect_without_dataio_job_dsl.json -c examples/federatedml-1.x-examples/intersect/test_intersect_without_dataio_job_conf.json
 
+python fate_flow/fate_flow_client.py -f submit_job -d examples/federatedml-1.x-examples/intersect/test_intersect_without_dataio_job_dsl.json -c examples/federatedml-1.x-examples/intersect/test_intersect_without_dataio_job_conf_stress_rsa.json
+
 #### predict
 
 #### evaluation
