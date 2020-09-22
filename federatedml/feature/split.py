@@ -21,7 +21,7 @@ from fate_flow.entity.metric import Metric
 from fate_flow.entity.metric import MetricMeta
 from federatedml.param.split_param import SplitParam
 from federatedml.util import consts
-from federatedml.transfer_variable.transfer_class.sample_transfer_variable import SampleTransferVariable
+from federatedml.transfer_variable.transfer_class.split_transfer_variable import SplitTransferVariable
 from federatedml.model_base import ModelBase
 import random
 
@@ -56,6 +56,20 @@ class Spliter(ModelBase):
 
     def set_flowid(self, flowid="split"):
         self.flowid = flowid
+
+    def sync_split_ids(self, sync_ids):
+        transfer_inst = SplitTransferVariable()
+
+        transfer_inst.sync_ids.remote(sync_ids,
+                                        role="host",
+                                        suffix=(self.flowid,))
+
+    def recv_split_ids(self):
+        transfer_inst = SplitTransferVariable()
+
+        sync_ids = transfer_inst.sync_ids.get(idx=0,
+                                                  suffix=(self.flowid,))
+        return sync_ids
 
     def run_split(self, data_inst, task_type, task_role):
         """
@@ -101,7 +115,7 @@ class Spliter(ModelBase):
                 data_res.append(sample_res)
                 res = res.subtractByKey(sample_res)
                 LOGGER.info(f"{_frac}-{frac}: sample_res={sample_res.count()}, res={res.count()}")
-            
+
             res.schema = data_inst.schema
             data_res.append(res)
             LOGGER.info(f"End-{self.fractions[-1]}: res.count={res.count()}")
@@ -117,12 +131,23 @@ class Spliter(ModelBase):
                 data_res.append(sample_res)
                 res = res.subtractByKey(sample_res)
                 LOGGER.info(f"{_frac}-{frac_num}: sample_res={sample_res.count()}, res={res.count()}")
-            
+
             res.schema = data_inst.schema
             data_res.append(res)
             LOGGER.info(f"End-{self.fractions[-1]}: res.count={res.count()}")
         else:
             raise(f'Invalid method_choice={method_choice}')
+
+        # Test Transfer Vars.
+        if task_role == consts.GUEST:
+            sync_ids = [1, 2, 3]
+            self.sync_split_ids(sync_ids)
+            LOGGER.info(f"sync-guest-send: {sync_ids}")
+        elif task_role == consts.HOST:
+            sync_ids = self.recv_split_ids()
+            LOGGER.info(f"sync-host-get: {sync_ids}")
+        else:
+            raise ValueError(f"`{task_role}` role not support yet")
 
         # For debugging
         try:

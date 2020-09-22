@@ -1,0 +1,12 @@
+{
+  "SplitTransferVariable": {
+    "sync_ids": {
+      "src": [
+        "guest"
+      ],
+      "dst": [
+        "host"
+      ]
+    }
+  }
+}

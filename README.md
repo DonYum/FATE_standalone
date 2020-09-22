@@ -90,6 +90,14 @@ TODOs:
 - 添加take方法；
 - sample方法需要添加去重功能。
 
+### 传递变量
+
+在`arch/transfer_variables/auth_conf/federatedml/`下添加配置文件，然后触发生成变量类：
+
+`python -m arch.transfer_variables.transfer_variable_generate -s arch/transfer_variables/auth_conf/federatedml/split_transfer_variable.json --force`
+
+生成的文件会放在`federatedml/transfer_variable/transfer_class/`下面。
+
 ## 通信模式
 
 在`standalone`模式下，`fate_flow`和`fate_board`通过`jdbc:sqlite:/fate/fate_flow/fate_flow_sqlite.db`通信。
