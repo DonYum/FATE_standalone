@@ -10,6 +10,7 @@ services:
             - "./fate/model:/fate/model_local_cache"
             - "./examples:/fate/examples"
             - "./fate_flow:/fate/fate_flow"
+            - "./arch/transfer_variables:/fate/arch/transfer_variables"
             - "./federatedml:/fate/federatedml"
             - "/etc/localtime:/etc/localtime"
      container_name: fate_python
