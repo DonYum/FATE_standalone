@@ -26,11 +26,11 @@ import json
 import os
 import sys
 
-from arch.api.utils import file_utils
+from arch.api.utils.file_utils import get_project_base_directory
 
 TEMPLATE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transfer_variable.template")
 SPACES = "    "
-DEFAULT_DST = os.path.join(file_utils.get_project_base_directory(), "federatedml", "transfer_variable",
+DEFAULT_DST = os.path.join(get_project_base_directory(), "federatedml", "transfer_variable",
                            "transfer_class")
 DEFAULT_SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "auth_conf", "federatedml")
 if __name__ == "__main__":
@@ -97,7 +97,11 @@ if __name__ == "__main__":
         code_str = temp.format(class_name=class_name, create_variable=create_variable)
 
         # save to file
-        save_path = os.path.join(dst_dir, f"{file_name}_transfer_variable.py")
+        if file_name.endswith('_transfer_variable'):
+            file_name = f"{file_name}.py"
+        else:
+            file_name = f"{file_name}_transfer_variable.py"
+        save_path = os.path.join(dst_dir, file_name)
         if os.path.exists(save_path):
             if not arg.force:
                 print(f"file {save_path} exists, do nothing, use --force option to overwrite")
