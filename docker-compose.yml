@@ -1,7 +1,7 @@
 version: "3"
 services:
   python:
-     image: "docker_python"
+     image: "10.12.0.78:5000/dfl/standalone/python"
      ports:
             - "9380:9380"
             - "9360:9360"
@@ -15,7 +15,7 @@ services:
             - "/etc/localtime:/etc/localtime"
      container_name: fate_python
   fateboard:
-     image: "docker_fateboard"
+     image: "10.12.0.78:5000/dfl/standalone/board"
      links:
             - python
      ports:

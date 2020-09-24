@@ -1,0 +1,42 @@
+ARG BASE_CONTAINER=fate_python:1.4.3
+FROM $BASE_CONTAINER
+
+LABEL maintainer="YunFeng<eric_ren@aliyun.com>"
+LABEL description="fake for adding PSI-OT(beppc-psi) support."
+
+RUN apt-get install libgoogle-glog-dev
+ADD beppc-psi /beppc-psi
+RUN cd /beppc-psi
+RUN git checkout origin dev-zichen
+RUN git pull
+RUN make cleanall
+RUN make
+RUN cp run.exe /bin/psi_ot
+RUN psi_ot
+
+WORKDIR /fate
+
+#COPY . /fate
+ADD fate.tar /fate
+ADD docker-entrypoint.sh /fate
+#ADD requirements.txt /fate
+
+RUN rm /bin/sh && ln -sf /bin/bash /bin/sh
+
+#RUN tar -xf fate.tar
+
+#RUN rm fate.tar
+
+COPY docker-entrypoint.sh /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+RUN apt-get update && apt-get install libgmp3-dev -y && apt-get install -y libmpfr-dev libmpfr-doc libmpfr6 && apt-get install libmpc-dev -y
+
+#RUN pip install -r requirements.txt -f ./pip-dependedocker ncies --no-index
+# RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
+RUN pip install -i http://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com -r requirements.txt
+
+ENV PYTHONPATH /fate
+
+ENTRYPOINT ["docker-entrypoint.sh"]
