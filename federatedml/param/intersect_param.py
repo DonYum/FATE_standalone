@@ -197,7 +197,8 @@ class IntersectParam(BaseParam):
         self.check_string_list(self.select_cols, descr)
         self.check_string_list(self.exclude_cols, descr)
         self.check_string(self.joinon_col, descr)
+        LOGGER.info(f"select_cols={self.select_cols}, exclude_cols={self.exclude_cols}, joinon_col={self.joinon_col}")
 
         self.encode_params.check()
-        LOGGER.debug("Finish intersect parameter check!")
+        LOGGER.info("Finish intersect parameter check!")
         return True

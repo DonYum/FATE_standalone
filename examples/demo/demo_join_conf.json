@@ -18,46 +18,6 @@
         ]
     },
     "role_parameters": {
-        "host": {
-            "args": {
-                "data": {
-                    "train_data": [
-                        {
-                            "name": "breast_hetero_host",
-                            "namespace": "experiment"
-                        }
-                    ]
-                }
-            },
-            "dataio_0": {
-                "with_label": [
-                    false
-                ],
-                "output_format": [
-                    "dense"
-                ],
-                "outlier_replace": [
-                    true
-                ]
-            },
-            "intersect_0": {
-                "intersect_method": [
-                    "rsa"
-                ],
-                "sync_intersect_ids": [
-                    true
-                ],
-                "only_output_key": [
-                    false
-                ],
-                "select_cols": [
-                    ["x0", "x1"]
-                ],
-                "joinon_col": [
-                    "false"
-                ]
-            }
-        },
         "guest": {
             "args": {
                 "data": {
@@ -88,25 +48,28 @@
                 "outlier_replace": [
                     true
                 ]
+            }
+        },
+        "host": {
+            "args": {
+                "data": {
+                    "train_data": [
+                        {
+                            "name": "breast_hetero_host",
+                            "namespace": "experiment"
+                        }
+                    ]
+                }
             },
-            "intersect_0": {
-                "intersect_method": [
-                    "rsa"
-                ],
-                "sync_intersect_ids": [
-                    true
-                ],
-                "only_output_key": [
+            "dataio_0": {
+                "with_label": [
                     false
                 ],
-                "select_cols": [
-                    ["x0", "x1"]
+                "output_format": [
+                    "dense"
                 ],
-                "exclude_cols": [
-                    ["x0", "x1"]
-                ],
-                "joinon_col": [
-                    "false"
+                "outlier_replace": [
+                    true
                 ]
             }
         }
@@ -139,6 +102,23 @@
                     "eval_type": "binary"
                 }
             }
+        },
+        "intersect_0": {
+            "intersect_method": [
+                "raw"
+            ],
+            "sync_intersect_ids": [
+                true
+            ],
+            "only_output_key": [
+                false
+            ],
+            "select_cols": [
+                ["x0", "x1"]
+            ],
+            "joinon_col": [
+                "false"
+            ]
         },
         "split_0": {
             "fractions": [
