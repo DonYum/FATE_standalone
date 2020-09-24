@@ -1,0 +1,12 @@
+{
+  "UploadSyncTransferVariable": {
+    "table_name": {
+      "src": [
+        "guest"
+      ],
+      "dst": [
+        "host"
+      ]
+    }
+  }
+}
