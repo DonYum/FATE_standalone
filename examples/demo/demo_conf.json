@@ -105,7 +105,7 @@
         },
         "intersect_0": {
             "intersect_method": [
-                "rsa"
+                "raw"
             ],
             "sync_intersect_ids": [
                 true
