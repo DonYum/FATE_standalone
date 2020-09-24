@@ -194,9 +194,9 @@ class IntersectParam(BaseParam):
                                                       [consts.GUEST, consts.HOST],
                                                       descr)
 
-        self.check_string_list(self.select_cols)
-        self.check_string_list(self.exclude_cols)
-        self.check_string(self.joinon_col)
+        self.check_string_list(self.select_cols, descr)
+        self.check_string_list(self.exclude_cols, descr)
+        self.check_string(self.joinon_col, )
 
         self.encode_params.check()
         LOGGER.debug("Finish intersect parameter check!")

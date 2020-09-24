@@ -49,17 +49,14 @@
                 ],
                 "only_output_key": [
                     false
+                ],
+                "select_cols": [
+                    ["x0", "x1"]
+                ],
+                "joinon_col": [
+                    "false"
                 ]
-            },
-            "select_cols": [
-                ["x0", "x1"]
-            ],
-            "exclude_cols": [
-                ["x0", "x1"]
-            ],
-            "joinon_col": [
-                "false"
-            ]
+            }
         },
         "guest": {
             "args": {
