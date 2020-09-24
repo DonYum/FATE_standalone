@@ -1,0 +1,29 @@
+version: "3"
+     services:
+       python:
+          image: "docker_python"
+          ports:
+                 - "9380:9380"
+                 - "9360:9360"
+          volumes:
+                 - "./fate/log:/fate/logs"
+                 - "./fate/model:/fate/model_local_cache"
+                 - "./examples:/fate/examples"
+                 - "./fate_flow:/fate/fate_flow"
+                 - "./arch/transfer_variables:/fate/arch/transfer_variables"
+                 - "./federatedml:/fate/federatedml"
+                 - "/etc/localtime:/etc/localtime"
+          container_name: fate_python
+       fateboard:
+          image: "docker_board"
+          links:
+                 - python
+          ports:
+                 - "8080:8080"
+          depends_on:
+                 - python
+          volumes:
+                 - "./fate/log:/data/projects/fate/python/logs"
+                 - "./fate_flow:/fate/fate_flow"
+                 - "/etc/localtime:/etc/localtime"
+          container_name: fate_fateboard
