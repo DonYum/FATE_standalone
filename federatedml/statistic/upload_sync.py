@@ -36,20 +36,21 @@ class UploadSync(object):
         self.MAX_BYTES = 1024*1024*8
         self.parameters = {}
         self.flowid = "upload"
+        self.table_info = {}
 
-    def sync_table_name(self, table_name):
+    def sync_table_info(self, table_info):
         transfer_inst = UploadSyncTransferVariable()
 
-        transfer_inst.table_name.remote(table_name,
+        transfer_inst.table_info.remote(table_info,
                                         role="host",
                                         suffix=(self.flowid,))
 
-    def recv_table_name(self):
+    def recv_table_info(self):
         transfer_inst = UploadSyncTransferVariable()
 
-        table_name = transfer_inst.table_name.get(idx=0,
+        table_info = transfer_inst.table_info.get(idx=0,
                                                   suffix=(self.flowid,))
-        return table_name
+        return table_info
 
     def run(self, component_parameters=None, args=None):
         self.parameters = component_parameters["UploadSyncParam"]
@@ -79,23 +80,11 @@ class UploadSync(object):
         if partition <= 0 or partition >= self.MAX_PARTITION_NUM:
             raise Exception("Error number of partition, it should between %d and %d" % (0, self.MAX_PARTITION_NUM))
 
-        # 同步表信息。
-        task_role = component_parameters["local"]["role"]
-        LOGGER.info(f'component_parameters["local"]={component_parameters["local"]}')
-        LOGGER.info(f"task_role={task_role}")
-        if task_role == consts.GUEST:
-            self.sync_table_name(table_name)
-            LOGGER.info(f"GUEST: Send -> table_name={table_name}")
-
-        elif task_role == consts.HOST:
-            table_name = self.recv_table_name()
-            LOGGER.info(f"GUEST: Get -> table_name={table_name}")
-        else:
-            raise ValueError("{} role not support yet".format(task_role))
-
+        # 上传数据
         session.init(mode=self.parameters['work_mode'])
         data_table_count = self.save_data_table(table_name, namespace, head, self.parameters.get('in_version', False))
         LOGGER.info("------------load data finish!-----------------")
+
         # rm tmp file
         try:
             if '{}/fate_upload_tmp'.format(job_id) in self.parameters['file']:
@@ -103,9 +92,32 @@ class UploadSync(object):
                 shutil.rmtree(os.path.join(self.parameters["file"].split('tmp')[0], 'tmp'))
         except:
             LOGGER.info("remove tmp file failed")
+
         LOGGER.info("file: {}".format(self.parameters["file"]))
         LOGGER.info("total data_count: {}".format(data_table_count))
         LOGGER.info("table name: {}, table namespace: {}".format(table_name, namespace))
+
+        # 生成表信息。
+        task_role = component_parameters["local"]["role"]
+        LOGGER.info(f'component_parameters["local"]={component_parameters["local"]}')
+        LOGGER.info(f"task_role={task_role}")
+
+        self.table_info["tabel_name"] = table_name
+        self.table_info["namespace"] = namespace
+        self.table_info["file"] = self.parameters["file"]
+        # self.table_info["cols"] = []
+        # self.table_info["v_len"] = data_table_count
+        self.table_info["payty_id"] = component_parameters["local"].get("party_id")
+        # self.table_info["statistics"] = statistics
+
+        if task_role == consts.GUEST:
+            self.sync_table_info(table_info)
+            LOGGER.info(f"GUEST: Send -> table_info={table_info}")
+        elif task_role == consts.HOST:
+            table_info = self.recv_table_info()
+            LOGGER.info(f"GUEST: Get -> table_info={table_info}")
+        else:
+            raise ValueError("{} role not support yet".format(task_role))
 
     def set_taskid(self, taskid):
         self.taskid = taskid

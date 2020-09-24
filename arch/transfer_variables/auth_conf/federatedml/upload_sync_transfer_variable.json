@@ -1,6 +1,6 @@
 {
   "UploadSyncTransferVariable": {
-    "table_name": {
+    "table_info": {
       "src": [
         "guest"
       ],

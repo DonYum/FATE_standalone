@@ -30,4 +30,4 @@ from federatedml.transfer_variable.base_transfer_variable import BaseTransferVar
 class UploadSyncTransferVariable(BaseTransferVariables):
     def __init__(self, flowid=0):
         super().__init__(flowid)
-        self.table_name = self._create_variable(name='table_name', src=['guest'], dst=['host'])
+        self.table_info = self._create_variable(name='table_info', src=['guest'], dst=['host'])
