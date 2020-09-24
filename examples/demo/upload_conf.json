@@ -1,0 +1,27 @@
+{
+	"initiator":{
+            "role":"guest",
+            "party_id":10000
+    },
+    "job_parameters":{
+        "work_mode":0
+    },
+    "role":{
+        "guest":[
+            10000
+        ],
+        "host":[
+            10000
+        ]
+    },
+    "algorithm_parameters": {
+        "upload_sync_0": {
+            "file": "examples/data/breast_hetero_host.csv",
+            "head": 1,
+            "partition": 16,
+            "work_mode": 0,
+            "table_name": "breast_hetero_host",
+            "namespace": "experiment"
+        }
+    }
+}

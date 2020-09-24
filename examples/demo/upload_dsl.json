@@ -1,0 +1,7 @@
+{
+    "components": {
+        "upload_sync_0": {
+            "module": "UploadSync"
+        }
+    }
+}
