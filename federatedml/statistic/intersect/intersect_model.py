@@ -122,7 +122,19 @@ class IntersectModelBase(ModelBase):
 
         return self.intersect_ids
 
+
     def fit(self, data):
+        # 筛选cols
+        if self.model_param.select_cols:
+            LOGGER.info(f'select_cols={self.model_param.select_cols}')
+        if self.model_param.exclude_cols:
+            LOGGER.info(f'exclude_cols={self.model_param.exclude_cols}')
+
+        # 处理join on
+        if self.model_param.joinon_col:
+            LOGGER.info(f'joinon_col={self.model_param.joinon_col}')
+
+        # core
         self.__init_intersect_method()
 
         if self.model_param.repeated_id_process:

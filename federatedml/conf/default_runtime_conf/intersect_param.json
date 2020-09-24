@@ -1,5 +1,9 @@
 {
     "intersect_method": "rsa",
     "random_bit": 128,
-    "sync_intersect_ids": true
+    "sync_intersect_ids": true,
+
+    "select_cols": [],
+    "exclude_cols": [],
+    "joinon_col": ""
 }

@@ -114,13 +114,20 @@ class IntersectParam(BaseParam):
     repeated_id_process: bool, if true, intersection will process the ids which can be repeatable
 
     repeated_id_owner: str, which role has the repeated ids
+
+    select_cols: [str, ...]
+
+    exclude_cols: [str, ...]
+
+    joinon_col: str
     """
 
     def __init__(self, intersect_method: str = consts.RAW, random_bit=128, sync_intersect_ids=True,
                  join_role=consts.GUEST,
                  with_encode=False, only_output_key=False, encode_params=EncodeParam(),
                  intersect_cache_param=IntersectCache(), repeated_id_process=False, repeated_id_owner=consts.GUEST,
-                 allow_info_share: bool = False, info_owner=consts.GUEST):
+                 allow_info_share: bool = False, info_owner=consts.GUEST,
+                 select_cols=[], exclude_cols=[], joinon_col=None):
         super().__init__()
         self.intersect_method = intersect_method
         self.random_bit = random_bit
@@ -134,6 +141,10 @@ class IntersectParam(BaseParam):
         self.repeated_id_owner = repeated_id_owner
         self.allow_info_share = allow_info_share
         self.info_owner = info_owner
+
+        self.select_cols = select_cols
+        self.exclude_cols = exclude_cols
+        self.joinon_col = joinon_col
 
     def check(self):
         descr = "intersect param's"
@@ -182,6 +193,10 @@ class IntersectParam(BaseParam):
         self.info_owner = self.check_and_change_lower(self.info_owner,
                                                       [consts.GUEST, consts.HOST],
                                                       descr)
+
+        self.check_string_list(self.select_cols)
+        self.check_string_list(self.exclude_cols)
+        self.check_string(self.joinon_col)
 
         self.encode_params.check()
         LOGGER.debug("Finish intersect parameter check!")

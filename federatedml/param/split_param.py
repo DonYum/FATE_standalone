@@ -59,7 +59,7 @@ class SplitParam(BaseParam):
 
         _f_sum = sum(self.fractions)
         # if abs(1-sum(self.fractions)) > 0.000001:
-        if not self._equal(_f_sum, 1):
+        if not self._number_equal(_f_sum, 1):
             raise ValueError(f"fractions sum of split param should be 1.0. {self.fractions}, {_f_sum}")
 
         return True

@@ -60,7 +60,7 @@ class BaseParam(object):
 
         for variable in var_list:
             attr = getattr(param_obj, variable)
-            
+
             if type(attr).__name__ in self.builtin_types or attr is None:
                 if variable not in validation_json:
                     continue
@@ -152,8 +152,16 @@ class BaseParam(object):
         return in_range
 
     @staticmethod
-    def _equal(value, compare_val):
+    def _number_equal(value, compare_val):
         return abs(value - compare_val) <= consts.FLOAT_ZERO
+
+    @staticmethod
+    def check_string_list(param, descr):
+        if type(param).__name__ != "list":
+            raise ValueError(descr + " {} not supported, should be list type".format(param))
+        for _s in param:
+            if type(_s).__name__ != "str":
+                raise ValueError(descr + " {} not supported, list elements should be string type".format(param))
 
     @staticmethod
     def _in(value, right_value_list):
