@@ -134,6 +134,7 @@ class UploadSync(object):
                 data_head = fin.readline()
                 count -= 1
                 self.save_data_header(data_head, dst_table_name, dst_table_namespace)
+                self.table_info["cols"] = data_head
             while True:
                 data = list()
                 lines = fin.readlines(self.MAX_BYTES)
@@ -148,6 +149,8 @@ class UploadSync(object):
                                            job_info)
                     data_table = session.save_data(data, name=dst_table_name, namespace=dst_table_namespace,
                                                    partition=self.parameters["partition"])
+
+                    self.table_info["v_len"] = data_table_count
                 else:
                     self.tracker.save_data_view(role=self.parameters["local"]['role'],
                                                 party_id=self.parameters["local"]['party_id'],
