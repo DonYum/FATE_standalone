@@ -97,7 +97,7 @@
                     "init_method":"zeros"
                 }
             },
-            "intersect_0":{
+            "intersection_0":{
                 "intersect_method":[
                     "rsa"
                 ],

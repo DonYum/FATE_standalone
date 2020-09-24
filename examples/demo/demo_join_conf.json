@@ -40,7 +40,7 @@
                     true
                 ]
             },
-            "intersect_0": {
+            "intersection_0": {
                 "intersect_method": [
                     "raw"
                 ],
@@ -89,7 +89,7 @@
                     true
                 ]
             },
-            "intersect_0": {
+            "intersection_0": {
                 "intersect_method": [
                     "raw"
                 ],

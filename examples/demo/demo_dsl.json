@@ -18,7 +18,7 @@
                 ]
             }
         },
-        "intersect_0": {
+        "intersection_0": {
             "module": "Intersection",
             "input": {
                 "data": {
@@ -41,7 +41,7 @@
             "input": {
                 "data": {
                     "data": [
-                        "intersect_0.train"
+                        "intersection_0.train"
                     ]
                 }
             },
