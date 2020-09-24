@@ -4,7 +4,7 @@
     "param_class" : "fate_flow/param/upload_sync_param.py/UploadSyncParam",
     "role":
     {
-        "local":
+        "guest|host":
         {
             "program": "upload_sync.py/UploadSync"
         }

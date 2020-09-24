@@ -28,16 +28,14 @@ from federatedml.util import consts
 LOGGER = log_utils.getLogger()
 
 
-class Upload(object):
+class UploadSync(object):
     def __init__(self):
         self.taskid = ''
         self.tracker = None
         self.MAX_PARTITION_NUM = 1024
         self.MAX_BYTES = 1024*1024*8
         self.parameters = {}
-
-    def set_flowid(self, flowid="upload"):
-        self.flowid = flowid
+        self.flowid = "upload"
 
     def sync_table_name(self, table_name):
         transfer_inst = UploadSyncTransferVariable()
@@ -54,7 +52,7 @@ class Upload(object):
         return table_name
 
     def run(self, component_parameters=None, args=None):
-        self.parameters = component_parameters["UploadParam"]
+        self.parameters = component_parameters["UploadSyncParam"]
         self.parameters["role"] = component_parameters["role"]
         self.parameters["local"] = component_parameters["local"]
         job_id = self.taskid.split("_")[0]
@@ -82,7 +80,8 @@ class Upload(object):
             raise Exception("Error number of partition, it should between %d and %d" % (0, self.MAX_PARTITION_NUM))
 
         # 同步表信息。
-        task_role = self.parameters["role"]
+        task_role = component_parameters["local"]["role"]
+        LOGGER.info(f'component_parameters["local"]={component_parameters["local"]}')
         LOGGER.info(f"task_role={task_role}")
         if task_role == consts.GUEST:
             self.sync_table_name(table_name)

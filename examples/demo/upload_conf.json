@@ -7,9 +7,6 @@
         "work_mode":0
     },
     "role":{
-        "arbiter": [
-            10000
-        ],
         "guest":[
             10000
         ],
